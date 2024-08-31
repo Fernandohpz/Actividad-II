@@ -1,0 +1,37 @@
+---------------------------------------------
+OSHONSOFT Z80 ASSEMBLER LISTING
+Line   Addr Opcode      Label   Instruction
+---------------------------------------------
+0001   0000             ; autor: Fernando Hernandez Perez
+0002   0000             
+0003   0000 06 45           ld B, 0x45        ; Cargar el primer número (45 en este caso) en B
+0004   0002 0E 54           ld C, 0x54        ; Cargar el segundo número (54 en este caso) en C
+0005   0004             
+0006   0004                 ; Sumar los números y ajustar el resultado a BCD
+0007   0004 78              ld A, B           ; Cargar el valor de B en A
+0008   0005 81              add A, C          ; Sumar el valor de C al acumulador A
+0009   0006 27              daa               ; Ajustar el acumulador A al formato BCD
+0010   0007 47              ld B, A           ; Guardar el resultado BCD en B
+0011   0008             
+0012   0008                 ; Hasta este punto del programa fue hecho por mi razonamiento despues de aqui utlice herramientas de internet
+0013   0008             
+0014   0008             
+0015   0008                 ; Separar las decenas y unidades del resultado BCD
+0016   0008 78              LD A, B           ; Cargar el resultado BCD en A
+0017   0009 E6 F0           AND 0xF0          ; Enmascarar para obtener solo las decenas (parte alta)
+0018   000B CB 3F           SRL A             ; Desplazar 4 bits a la derecha
+0019   000D CB 3F           SRL A             ; (una segunda vez para dividir por 16)
+0020   000F CB 3F           SRL A             ; y ubicar las decenas en los 4 bits bajos
+0021   0011 CB 3F           SRL A
+0022   0013 67              LD H, A           ; Guardar las decenas en H
+0023   0014             
+0024   0014 78              LD A, B           ; Cargar el resultado BCD en A nuevamente
+0025   0015 E6 0F           AND 0x0F          ; Enmascarar para obtener solo las unidades (parte baja)
+0026   0017 6F              LD L, A           ; Guardar las unidades en L
+0027   0018             
+0028   0018                 ; Calcular las centenas
+0029   0018 AF              XOR A             ; Limpiar A para calcular las centenas (no hay centenas en este caso)
+0030   0019             
+0031   0019                 ; Fin del programa
+0032   0019 76              HALT              ; Detener la ejecución
+Number of errors = 0
